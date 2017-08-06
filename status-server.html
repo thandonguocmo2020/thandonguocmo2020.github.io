@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p>IV. Cảnh báo lỗi</p>
+<p><br></p>
+<p>400 - BadRequest =&gt; &nbsp;Server không thể xử lý yêu cầu.. Lỗi ví dụ : "uri" không tồn tại, kích thước tệp quá
+    lớn...&nbsp;</p>
+<p>401 - Unauthorized =&gt; Xác thực thất bại người dùng chưa được xác thực.</p>
+<p>402 - PaymentRequired =&gt; Server yêu cầu người dùng trả tiền trước khi tiếp tục.</p>
+<p>403 - Forbidden =&gt; Request truy vấn là hợp lệ nhưng máy chủ từ chối thực thi có thể do người dùng không có quyền
+    truy cập vào đây.</p>
+<p>404 - notfound =&gt; url trang không được tìm thấy có thể sau này sẽ có.&nbsp;</p>
+<p>405 - MethodNotAllowed =&gt;Phương pháp không được cho phép truy cập url. &nbsp;Ví dụ Client gửi http get &nbsp;cùng
+    form b lên http post trên server. Khác loại...</p>
+<p>406 - NotAcceptable =&gt; Server chứng thực dữ liệu gửi lên và dữ liệu đó không phù hợp ví dụ dữ liệu là id trong khi
+    client gửi lên string.</p>
+<p>407 - ProxyAuthenticationRequired =&gt; Mã này yêu cầu người dùng đăng nhập và xử dụng 1 proxy server.</p>
+<p>408 - RequestTimeout =&gt; Thời gian nhận dữ liệu từ request quá dài hết thời gian nhận.</p>
+<p>409 - (Conflict) =&gt; Xung đột khi dữ liệu được yêu cầu liên tục với 1 dữ liệu trước đó.</p>
+<p>410 - (Gone) =&gt; Dữ liệu trong trang yêu cầu đã bị xóa vĩnh viễn.</p>
+<p>411 - LengthRequired ==&gt; Độ dài của dữ liệu cung cấp không hợp lệ.</p>
+<p>412 - PreconditionFailed ==&gt; Các máy chủ không đáp ứng 1 trong các điều kiện query mà người dùng đặt ra</p>
+<p>413 - RequestEntityTooLarge =&gt; Máy chủ không thể xử lý yêu cầu bởi vì nó quá lớn để các máy chủ có thể xử lý.</p>
+<p>414 - RequestUriTooLong =&gt; URI được yêu cầu quá dài để máy chủ có thể xử lý.</p>
+<p>415 - UnsupportedMediaType =&gt; Khách truy cập đang yêu cầu một đinh dạng không được hỗ trợ bởi máy chủ web.</p>
+<p>416 - RequestedRangeNotSatisfiable =&gt; Các máy chủ trả về mã trạng thái này nếu bạn yêu cầu cho một phạm vi truy
+    cập ko có sẵn</p>
+<p>417 - ExpectationFailed =&gt; Phản ứng ko mong đợi người được thể hiện trong header.</p>
+<p>418 - IAmATeapot =&gt; Địa chỉ này là một trò đùa cá tháng tư. :))</p>
+<p>422 - UnprocessableEntity =&gt; Không thể xử lý với một dữ liệu yêu cầu rỗng</p>
+<p>423 - Locked ==&gt; Các nguồn tài nguyên đang được truy cập bị khóa</p>
+<p>424 - FailedDependency =&gt; Các yêu cầu xử lý thất bại do ko đáp ứng 1 yêu cầu trước từ request đó.</p>
+<p>426 - UpgradeRequired =&gt; Các khách hàng nên chuyển sang một giao thức khác nhau như TCP UDP DCCP SCTP RSVP</p>
+<p>428 - PreconditionRequired ==&gt; Máy chủ yêu cầu thêm điều kiện dữ liệu được gửi kèm theo query trong request method
+    get.</p>
+<p>429 - TooManyRequests =&gt; QUá nhiều request</p>
+<p>431 - RequestHeaderFieldsTooLarge =&gt; Các máy chủ là không sẵn sàng để xử lý yêu cầu hoặc 1 header field hoặc all
+    field có giá trị là quá lớn</p>
+<p>444 - NoResponse ==&gt; Không có phản ứng trả về.</p>
+<p>Các mã phản ứng với 5xx =&gt; Các máy chủ không thực hiện một yêu cầu rõ ràng hợp lệ</p>
+<p>500 Server Error =&gt; Một thông báo lỗi chung chung, đưa ra khi một điều kiện bất ngờ đã gặp phải&nbsp;</p>
+<p>501 - NotImplemented =&gt;&nbsp;</p>
+<p>502 - BadGateway</p>
+<p>503 - ServiceUnavailable</p>
+<p>504 - GatewayTimeout</p>
+<p>505 - HTTPVersionNotSupported</p>
+<p>506 - VariantAlsoNegotiates</p>
+<p>507 - InsufficientStorage</p>
+<p>508 - LoopDetected</p>
+<p>509 - BandwidthLimitExceeded</p>
+<p>510 - NotExtended</p>
+<p>511 - NetworkAuthenticationRequired</p>
+<p>598 - NetworkReadTimeout</p>
+<p>599 - NetworkConnectTimeout</p>
+<div><br></div>
+</body>
+</html>
