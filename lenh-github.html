@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="css/style.css" rel="stylesheet">
+    </head>
+    <body>
+    <p><br></p><p>Các lệnh làm việc với git</p><p><br></p><p>..</p><p><br></p><p>I. config&nbsp;</p><p><br></p><p>Cấu hình&nbsp;</p><p><br></p><p>git config --global user.name "name github"</p><p>git config --global user.email "email github"</p><p><br></p><p><br></p><p>II. Kết nối tới kho trên git tới máy</p><p><br></p><p><br></p><p>1. Thêm một kho kết nối tới git trên máy...</p><p><br></p><p>git remote add "Link kho"</p><p><br></p><p><br></p><p>2. Thêm dữ liệu &nbsp;trong project vào bộ nhớ git</p><p><br></p><p>git add *&nbsp;</p><p><br></p><p>3. Đẩy dữ liệu vào git chuẩn bị thêm vào kho</p><p><br></p><p>git commit -m "tin nhắn thông tin trước khi đẩy"</p><p><br></p><p>4. Đẩy dữ liệu lên kho</p><p><br></p><p>git push origin master&nbsp;</p><p><br></p><p>&lt;master&gt; có thể là tên nhánh.</p><p><br></p><p><br></p><p>III. Trong quá trình làm việc có thể project phát sinh lỗi trưa kịp fix tạo ra nhánh mới để đẩy tạm code lên</p><p>&nbsp;</p><p>1. git branch iss53&nbsp;</p><p><br></p><p>&lt;iss53&gt; là tên nhánh.</p><p><br></p><p>2. Di chuyển sang nhánh để đẩy code vào</p><p><br></p><p>git checkout iss53</p><p><br></p><p>3. add file vào bộ nhớ nhánh</p><p><br></p><p>git add *</p><p><br></p><p>4. Thêm tin nhắn vào chuẩn bị đẩy</p><p><br></p><p>git commit -m "add fix iss53"</p><p><br></p><p>5. Đẩy lên nhánh</p><p><br></p><p>git push origin iss53</p><p><br></p><p><br></p><p>IV. Di chuyển giữa các project</p><p><br></p><p><br></p><p>1. Đầu tiên gõ lệnh</p><p><br></p><p>git remote -v</p><p><br></p><p>xem các project link của kho mà đã add vào kết nối.</p><p><br></p><p>Nếu không có name nào tức khi gõ lệnh đẩy git push origin master &nbsp;===&gt; origin là tên và nhánh là master</p><p><br></p><p>Tương ứng cú pháp đẩy code nên đâu nếu thay đổi project muốn nó đẩy lên một kho khác :</p><p><br></p><p><br></p><p>&nbsp;</p><p><br></p><p><br></p><p>2. Gõ lệnh git remote --help để xem các hướng dẫn</p><p><br></p><p>Git remote add -f &lt;name-repository&gt; https://github.com/name-your/reposistory</p><p><br></p><p><br></p><p>Chú ý : &lt;name-repository&gt; là tên mà bạn gõ tiếp</p><p><br></p><p>git remote -v&nbsp;</p><p><br></p><p>==&gt; thấy tên của uri project để đẩy code nên</p><p><br></p><p>3. Xác định đẩy code nên đâu</p><div><br></div>
+    </body>
+</html>
