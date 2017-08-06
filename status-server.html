@@ -5,6 +5,48 @@
     <title>Title</title>
 </head>
 <body>
+<p>Các mã phản hồi từ server ==&gt; response :</p>
+<p><br></p>
+<p><br></p>
+<p>I. Nhận dữ liệu và tiếp tục gửi lên đến khi gửi hết yêu cầu</p>
+<p><br></p>
+<p>100 :(Continue) Máy chủ đã nhận 1 phần dữ liệu gửi lên. Cleint cần tiếp tục gửi các dữ liệu còn lại lên để xử lý.</p>
+<p>101 :(Switching protocols) Client yêu cầu máy chủ chuyển đổi giao thức ví dụ từ https sang https hoặc https sang
+    ssh.</p>
+<p><br></p>
+<p>II. Nhận dữ liệu và máy chủ đã xử lý xong</p>
+<p><br></p>
+<p>Dấu ==&gt; phù hợp các method&nbsp;</p>
+<p><br></p>
+<p>200 : (Successful) =&gt; yêu cầu được xử lý thành công mà ko gửi dữ liệu gì trả lại. ==&gt; POST</p>
+<p>201 : (Created) =&gt; Xử thành thành công tạo tài liệu mới trả lại các yêu cầu. &nbsp;==&gt; &nbsp;GET</p>
+<p>202 : (Accepted) =&gt; Quá trình trả lại dữ liệu đang được thực thi chờ kết quả trả về. ==&gt; PUT, UPDATE</p>
+<p>203 : (Non-authoritative information)=&gt; Gửi dữ liệu từ một nguồn khác không cần xác thực chờ dữ liệu từ nguồn đó
+    trả về</p>
+<p>204 : (No content) =&gt; Không có dữ liệu nào trả lại người dùng. ==&gt; GET NOT DATA</p>
+<p>205 : (Reset content) =&gt; Yêu cầu người dùng thay đổi lại chế độ xem nội dung sẽ được trả về.</p>
+<p>206 : (Partial content) =&gt; Một phần nội dung đang được xử lý. ==&gt; Chờ...LOADING UPDATE FILE</p>
+<p><br></p>
+<p><br></p>
+<p><br></p>
+<p>III. Máy chủ chuyển hướng đến nơi khác khi xử lý xong</p>
+<p><br></p>
+<p>Mã trạng thái có dạng 3xx (truy cập bị chuyển hướng) google không khuyến khích</p>
+<p><br></p>
+<p>300 : (Multiple choices) =&gt; Máy chủ sẽ lựa chọn một hình thức phản hồi dựa trên các lựa chọn cung cấp từ
+    request.</p>
+<p>301 : (Moved permanently) ==&gt; trang web này đã bị chuyển hướng vĩnh viễn sang một địa chỉ mới.</p>
+<p>302 : (Moved temporarily) =&gt; mã báo máy chủ tạm thời dùng 1 địa chỉ khác nhưng yêu cầu có thể truy cập một địa chỉ
+    cũ mà họ đang yeu cầu.</p>
+<p>303 : (See other location) =&gt; Máy chủ này trả về khi request gửi yêu cầu tới một vị trí khác ngoài trang web. Máy
+    chủ sẽ tự động chuyển hướng tới đó.</p>
+<p>304 : (Not modified) =&gt; Dữ liệu trang không thay đổi từ lần truy cập cuối cùng.</p>
+<p>305 : (Use proxy) =&gt; yêu cầu có sử dụng proxy "proxy là một server internet" thực hiện các yêu cầu chỉ truy cập
+    vào các trang xử dụng proxy này.</p>
+<p>307 : (Temporary redirect) =&gt; Mã này thông báo máy chủ đang bị chuyển hướng tới một địa chỉ hosting khác và địa
+    chỉ này vẫn có thể sử dụng trong tương lai.</p>
+<p><br></p>
+<p><br></p>
 <p>IV. Cảnh báo lỗi</p>
 <p><br></p>
 <p>400 - BadRequest =&gt; &nbsp;Server không thể xử lý yêu cầu.. Lỗi ví dụ : "uri" không tồn tại, kích thước tệp quá
@@ -56,6 +98,5 @@
 <p>511 - NetworkAuthenticationRequired</p>
 <p>598 - NetworkReadTimeout</p>
 <p>599 - NetworkConnectTimeout</p>
-<div><br></div>
 </body>
 </html>
