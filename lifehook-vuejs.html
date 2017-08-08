@@ -11,9 +11,9 @@
         
 
 <pre>
-1.  Vòng đời nạp các component trong vue.
+ Tùy vào công việc mà chúng ta cần đến vòng đời render của component thực thi lệnh nào đó. 
 
-
+ Xem Lifehook của Vuejs
 
 + beforeCreate() =>"Quan sát dữ liệu"  sau khi khai báo new Vue(). Object này sẽ lắng nghe các dữ liệu mà nó nên có "load data".
 
@@ -24,7 +24,6 @@ Thực hiện load các module. Các component cũng được biên dịch sang 
 
 
 Vue thực hiện đồng bộ sau khi new Vue được khởi tạo.  load vào đã trước khi xem sét dữ liệu có bên trong các module đó.
-
 
 
 + created() => Giai đoạn này nó đã hoàn tất việc load các component giống như module. Các dữ liệu sau đã được biên dịch.
@@ -40,8 +39,7 @@ Dạng như app.vue đã nạp. Tiếp đó sub/component.vue được gọi và
 
 việc nắp ghép DOM đã không xảy ra. this.$el không thể sử dụng được trong giai đoạn này.
 
-
- Nên bắn api lấy dữ liệu.
+Nên bắn api lấy dữ liệu.
 
 Không nên truy cập vuex giống như this.store.... vì nó chưa nạp lại dữ liệu mà chỉ hiển thị thể hiện new vue đồng nhất.
 
@@ -62,16 +60,26 @@ Nên việc sử dụng this.$el để truy cập đến các elment có trong c
 
 nếu this.$el là ở component hiện tại nếu nó có sẵn. Còn ko có sẵn bạn cần dùng this.$mount().el để gọi.
 
+Cả ở giai đoạn này việc load html và module đã hoàn tất nên việc truy cập vào this.$store để lấy data là ko nên.
+
+
+hãy dùng this.$store.state... hoặc this.$store ở update lifehook. sau khi các component đã được thực hiện render xong cả funtion và data.
+
+Thì hãy thực thi một công việc nào đó.
+
 
 + beforeUpdate() => Hook này chạy trước khi data của component được tác động thay đổi và đang trong quá trình render trở lại.
 
-+ updated() => Sau khi data component có sự thay đổi và được render trở lại.
++ updated() => Sau khi các compoenent đã được render function cũng như html. và có sự render thay đổi.
 
 + beforeDestroy() => trước khi data hoặc dom bị được hủy bỏ
 
 
-
 Mọi vòng đời đều dàng buộc tới this giống như truy cập tới new Vue. Bạn không nên dùng arrow function vì this sẽ là ngữ cảnh function hiện tại.
+
+
+
+
 
 
 </pre>
