@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="css/style.css" rel="stylesheet">
+    </head>
+    <body>
+
+        
+
+<pre>
+1.  Vòng đời nạp các component trong vue.
+
+
+
++ beforeCreate() =>"Quan sát dữ liệu"  sau khi khai báo new Vue(). Object này sẽ lắng nghe các dữ liệu mà nó nên có "load data".
+
+Thực hiện load các module. Các component cũng được biên dịch sang dạng module nên giai đoạn này nó sẽ lắng nghe và load các module được biên dịch vào thể hiện vue.
+
+
+Ở giai đoạn này bạn không thể truy cập các dữ liệu có trong component. Bạn chỉ nên load các module bên ngoài vào trong component hiện tại để vue load module theo một thể đồng nhất.
+
+
+Vue thực hiện đồng bộ sau khi new Vue được khởi tạo.  load vào đã trước khi xem sét dữ liệu có bên trong các module đó.
+
+
+
++ created() => Giai đoạn này nó đã hoàn tất việc load các component giống như module. Các dữ liệu sau đã được biên dịch.
+
+data, computed, methods, watch/event callbacks  ok nó đã load vào vue. 
+
+Khi chúng ta gọi conso.log(this) trong component hiện tại sẽ thấy một thể hiện vue đồng nhất vì nó đã được load đồng bộ lại.
+
+Ở giai đoạn này nó chỉ biên dịch template sang function mà không nắp ghép các component lại với nhau. 
+
+
+Dạng như app.vue đã nạp. Tiếp đó sub/component.vue được gọi vào app.vue. Nó không xuất ra outputHtml trong giai đoạn này nên
+
+việc nắp ghép DOM đã không xảy ra. this.$el không thể sử dụng được trong giai đoạn này.
+
+
+ Nên bắn api lấy dữ liệu.
+
+Không nên truy cập vuex giống như this.store.... vì nó chưa nạp lại dữ liệu mà chỉ hiển thị thể hiện new vue đồng nhất.
+
+nếu có thấy dữ liệu của vuex và state cũng chỉ là nó load xong các component khác và nạp vào vue trong lúc nó nạp nó cũng đã biên dịch component hiện tại như một module
+
+cho nên state vuex mang giá trị ban đầu chỉ khởi tạo nhưng chưa thể sử dụng.
+
+
++ beforeMount() => Giai đoạn này chính là lúc nó biên dịch cái component và load component giống như một module. == modules.export = render function (){}
+
+Các dữ liệu sau đây sẽ được biên dịch : data, computed, methods, watch/event init event. "init event chính là các cú pháp như v-model" bingding 2 chiều event. ví dụ cú pháp được biên dịch : <input v-model="question">.
+
+Giai đoạn này bạn không thể truy cập this.$el vì nó chưa được thực thi.
+
+
++ mounted() => Giai đoạn này chính là lúc nó nắp ghép các outputHtml khi component hiện tại được ghép vào các component khác.
+Nên việc sử dụng this.$el để truy cập đến các elment có trong component hiện tại là có thể.
+
+nếu this.$el là ở component hiện tại nếu nó có sẵn. Còn ko có sẵn bạn cần dùng this.$mount().el để gọi.
+
+
++ beforeUpdate() => Hook này chạy trước khi data của component được tác động thay đổi và đang trong quá trình render trở lại.
+
++ updated() => Sau khi data component có sự thay đổi và được render trở lại.
+
++ beforeDestroy() => trước khi data hoặc dom bị được hủy bỏ
+
+
+
+Mọi vòng đời đều dàng buộc tới this giống như truy cập tới new Vue. Bạn không nên dùng arrow function vì this sẽ là ngữ cảnh function hiện tại.
+
+
+</pre>
+    
+    </body>
+</html>
