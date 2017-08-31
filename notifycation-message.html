@@ -1,0 +1,186 @@
+Collection người dùng.
+
+user {
+
+_id: ObjectId,            // id người dùng
+fn: String,               // Họ
+ln: String,               // Tên
+crt: Date,                // ngày tạo
+stt: number               // trạng thái kích hoạt tài khoản,
+is_active: char(1),       // cho phép xóa tạm thời người dùng trong group ví dụ cấm tạm thời
+notify: []                // cho phép hiển thị các thông báo tương ứng, Nếu user chọn loại nào sẽ add vào mảng này từ mảng này sẽ lấy được 
+                          // các loại type notification của user.
+}
+
+
+Collection chứa tin nhắn message
+
+message {
+
+_id: ObjectId,         // id của tin nhắn
+subject: String,       // vấn đề tùy chọn có hoặc ko cần
+message:  String,      // Nội dung gửi
+uri: String,           // Id hoặc đích đến khi người dùng click vào thông báo
+crt: Date,             // thời gian tạo tin nhắn
+parent_id: ObjectId,   // parent_id là tùy chọn xem tin nhắn có được đáp trả lời lại hay ko.
+type: [],              // thông báo loại ví dụ khi muốn lấy ra tất cả thông báo của một hành động
+
+// phần dưới thường do cài đặt của người dùng
+
+Is_reminder:  number(0 or 1)       , //  có yêu cầu nhắc lại tin nhắn hay ko thường do cài đặt của người dùng
+reminder_frequency_id: ObjectId,     // ID nhắn lại tin nhắn theo thời gian  hàng ngày hoặc hàng tuần từ đó tính ra time 
+expiry_date: Date,                   // Giới hạn thời gian không còn nhắc lại với người dùng
+next_remin_date: Date,               // Giữ ngày tháng tiếp theo cần gửi lại lời nhắn khi người dùng vẫn chưa đọc tin nhắn is_read của bảng người nhận vẫn là 0.
+
+}
+
+
+Collection recipient quan trọng nhất message_recipient => Bảng này là bản đồ gửi tin nhắn cho người nhận
+
+
+recipient {
+ _id: ObjectId,
+ recipient_id: ObjectId,  // id của user nhận tin nhắn
+ group_id: ObjectId,      // id của người dùng trong 1 group
+ message_id: ObjectId     // Tin nhắn gửi
+ is_read: number,          // trạng thái đã đọc hay chưa
+}
+
+
+Collection user_group chứa nhóm người được gửi tin nhắn đến
+
+
+user_group {
+_id : ObjectId,            // _id của người dùng thuộc nhóm group
+user_id: ObjectId,         // Id của user thuộc group
+group_id: ObjectId,        // Id của thông tin tên group
+crt: Date,                 // Id của thời gian user tham gia  group
+stt: number,               // Trạng thái người dùng đã được tham gia group hay chưa.
+is_active: char(1),       // cho phép xóa tạm thời người dùng trong group ví dụ cấm tạm thời
+}
+
+Collection group chứa thông tin của nhóm
+
+group {
+ 
+id: ObjectId,     // id của tên group
+name: String,    // tên group
+crt: Date,       // thời gian group được tạo ra
+stt : number     // trạng thái group .. public-private..
+is_active: char(1), // xóa tạm thời group có thể khôi phục
+}
+
+
+
+Quay lại bảng người nhận tin nhắn có cột group_id ==> nhóm người mà sẽ nhận được tin nhắn sẽ tham chiếu tới
+
+id của tài liệu document của user_group. Tức 1 người thuộc nhóm. Mỗi khi một tin nhắn được tạo ra sẽ
+
+gửi đến người dùng và  người trong nhóm tương ứng.
+
+Giả sử một tin nhắn gửi cho 1 người trong nhóm như vậy 10 document tin nhắn sẽ được tạo ra, mỗi tin nhắn
+sẽ có tương ứng 1 document  cho 1 người  dùng tương ứng trong user_group.
+
+
+Nếu chỉ gửi đến 1 người mà ko cần xác định nhóm thì group_id là trống.
+
+is_read trong bảng người nhận sẽ cho biết người đó đã đọc tin nhắn hay chưa.
+
+
+*** Nên đặt trạng thái duy nhất cho thuộc tính của document là duy nhất trong bảng người nhận với recipient  collection
+
+Bởi tính nhất quán chỉ 1 bản ghi tồn tại với "message_id" và "recipient_id" và group_id => chỉ duy nhất 1 document được thêm vào collection.
+
+
+
+
+----------------- HỆ THỐNG CHO PHÉP TRẢ LỜI TIN NHẮN NHẬN ĐƯỢC ----------------------------------------
+
+
+Nhìn vào parent_id của collection tin nhắn giúp cho việc quản lý phân cấp các tin nhắn xem tin nhắn có được trả lời lại hay ko.
+
+
+tin nhắn 1 : ID1,
+tin nhắn 2: ID2 -> parent_id == ID1
+
+Như vậy giúp quản lý việc phân cấp tin nhắn xem có được trả lời lại hay ko.
+
+Câu lệnh truy vấn ví dụ xem % đọc tin nhắn của mỗi tin nhắn.
+
+
+SELECT msg.subject, sent_to,
+       msg.create_date, (summ / countt) * 100 AS Read_Per
+FROM (SELECT msg.subject, grp.name as sent_to,  msg.create_date, 
+      SUM (is_read) AS summ, COUNT (is_read) AS countt
+      FROM message_recipient msgrec,  message msg,
+           user_group ug,  group grp
+      WHERE  msgrec.message_id = msg.id
+      AND msgrec.recipient_group_id = ug.id
+      AND ug.GROUP_ID = grp.id
+      AND msgrec.recipient_group_id IS NOT NULL
+      GROUP BY msg.subject, grp.name, msg.create_date
+      UNION
+      SELECT msg.subject, u.first_name || ' ' || u.last_name as sent_to,
+      msg.create_date, SUM (is_read) AS summ, COUNT (is_read) AS countt
+      FROM message_recipient msgrec, MESSAGE msg,  user u
+      WHERE msgrec.message_id = msg.id
+      AND msgrec.recipient_id = u.id
+      AND msgrec.recipient_group_id IS NULL
+      GROUP BY msg.subject, name, msg.create_date);
+
+
+Hiểu theo logic code trên ko có tính chất thực thi nên đừng coppy lém vô chạy làm chi : 
+
+Logic như sau :
+
++ Lấy ra các tiêu đề tin nhắn và gửi đến ai "SELECT msg.subject, sent_to"
+
++ Gửi lúc nào và đọc bao nhiêu phần trăm : msg.create_date  và (summ / countt) * 100 
+
++ lấy dữ liệu từ đâu để tính toán : FROM (biểu thức)
+
+------------------------------------KẾT QUẢ MINH HỌA ------------------------------------------------
+
+Subject	                         		Sent to	    				Sent	                      Read %
+Project delivery due on Tuesday		        Project Delivery Team			9/13/2015 08:15			42%
+Meet me on Monday				John D					9/10/2015 13:30			100%
+Sync up dev environment with production		DBA team				9/9/2015 09:11			80%
+Closing up NCRs of audit			NSS-team	        		9/9/2015 17:50			45%
+
+
+--------------------------------   Cơ chế nhắc nhở lại tin nhắn -------------------------------------
+
+
+Chú ý các thuộc tính sau trong collection message  :
+
+Is_reminder ==> yêu cầu nhắc lại nếu chưa đọc tin nhắn true hoặc false. hoặc lưu dạng 0 or 1.
+reminder_frequency_id =>  tần suất nhắc nhở hàng ngày hoặc hàng tuần bảng này sẽ tạo ngay sau đây.
+Next_remind_date ==> lần nhắc tiếp theo ngày tháng nhắc khi mà is_read == 0;
+Expiry_date => thời gian hết hạn của lần nhắc nhở.
+
+
+Collection reminder_frequency bộ sưu tập chứa dữ liệu của lần nhắc nhở 
+
+reminder_frequency {
+_id: ObjectId,             // id của tần suất
+title: String,             // Hàng tuần hoặc hàng ngày
+frequency: number(0 or 1), // ngày hoặc tuần 0 là ngày 1 là tuần.
+is_active:  number(0,1)   // xóa mềm
+}
+
+Giả sử một tin nhắn gửi đến 1 người dùng vào ngày 14/9 và hết hạn vào  10/5.. Tần suất nhắc nhở là hàng tuần (hết 1 tuần thì nhắc).
+
+Như vậy trong trường hợp này tin nhắn sẽ được gửi hàng ngày 21/9 và 28/9 và lần cuối cùng vào 10/5 để thúc giục họ phản hồi.
+
+
+KẾT LUẬN :
+
+Một trong những cách sử dụng tốt nhất của hệ thống nhắn tin này là gửi thông báo cho người dùng đã không hoạt động trong hệ thống trong một thời gian dài.
+
+
+Tùy từng bài toán ta đặt group cho phù hợp ví dụ bạn có một hệ thống user-post-comment-like -> bạn cần tạo ra các thông báo khi người dùng đăng bài viết hoặc khi tạo ra 
+các comment. hay... bạn có thể nhóm người dùng cùng comment bài viết hoặc like bài viết vào một group_user. sau đó tạo ra notify cho cả hệ thống.
+
+ 
+
+
