@@ -49,8 +49,19 @@ dán vào vùng nhắc lệnh nó yêu cầu ấn Y để tiếp tục
 Nó hỏi tiếp : Enter passphrase (empty for no passphrase): "điền mật khẩu của bạn"
 Enter same passphrase again: Nhập mật khẩu lần nữa.
 
-Sau đó nó sẽ tạo ra mật khẩu ssh của bạn 
+Sau đó nó sẽ tạo ra mật khẩu ssh của bạn nó sẽ dùng cấu hình cho tập tin .ssh/config
 
+Sau đó mở gitbash và gõ lệnh : cat ~/.ssh/id_rsa.pub | clip
+
+Bước cuối cùng là thêm khóa công khai SSH của bạn vào GitLab.
+
+Điều hướng đến tab 'key SSH' trong 'setting' của bạn. Dán key của bạn trong phần 'Khóa' và cung cấp cho nó 'Tiêu đề' mà bạn thấy có liên quan. 
+
+Sử dụng một tiêu đề có thể nhận dạng như 'Laptop công việc - Windows 7' hoặc 'Trang chủ MacBook Pro 15'.
+
+Coppy mở file C:\Users\Hoang Hiep\.ssh\id_rsa.pub  trong máy của bạn vào coppy vào key ssh 
+
+Nếu bạn tự sao chép khóa SSH công khai của mình, đảm bảo bạn đã sao chép toàn bộ khóa bắt đầu ssh-rsa và kết thúc bằng email của bạn.
 
 
   
