@@ -63,5 +63,8 @@ Coppy mở file C:\Users\Hoang Hiep\.ssh\id_rsa.pub  trong máy của bạn vào
 
 Nếu bạn tự sao chép khóa SSH công khai của mình, đảm bảo bạn đã sao chép toàn bộ khóa bắt đầu ssh-rsa và kết thúc bằng email của bạn.
 
+Sau đó bạn có thể kéo kho git của bạn về máy bằng lệnh 
 
-  
+git clone git@gitlab.com:thandonguocmo2020/geek.git 
+
+và thực hiện thao tác trên nó. 
