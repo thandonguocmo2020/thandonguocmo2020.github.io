@@ -30,3 +30,27 @@ cd existing_repo
 git remote add origin git@gitlab.com:thandonguocmo2020/geek.git
 git push -u origin --all
 git push -u origin --tags
+
+
+// khi go lenh 
+git clone git@gitlab.com:thandonguocmo2020/geek.git
+
+có thể nó yêu cầu tạo ssh gõ lệnh  trên cmd git :
+
+ssh-keygen -t rsa -C "your.email@example.com" -b 4096
+
+"you mail là email của bạn" ví dụ : ssh-keygen -t rsa -C "thandonguocmo2020@gmail.com" -b 4096
+
+sau đó nó hỏi bạn có muốn thay đổi đường dẫn đề xuất hay sử dụng mặc định nếu dùng mặc định thì ấn enter nếu dùng uri riêng thì coppy
+parse
+
+dán vào vùng nhắc lệnh nó yêu cầu ấn Y để tiếp tục
+
+Nó hỏi tiếp : Enter passphrase (empty for no passphrase): "điền mật khẩu của bạn"
+Enter same passphrase again: Nhập mật khẩu lần nữa.
+
+Sau đó nó sẽ tạo ra mật khẩu ssh của bạn 
+
+
+
+  
