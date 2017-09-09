@@ -1,12 +1,12 @@
-Command line instructions
+## Command line instructions
 
 
-Git global setup
+###Git global setup
 
 git config --global user.name "thandonguocmo2020"
 git config --global user.email "thandonguocmo2020@gmail.com"
 
-Create a new repository
+###Create a new repository
 
 git clone git@gitlab.com:thandonguocmo2020/geek.git
 cd geek
@@ -15,7 +15,7 @@ git add README.md
 git commit -m "add README"
 git push -u origin master
 
-Existing folder
+###Existing folder
 
 cd existing_folder
 git init
@@ -24,7 +24,7 @@ git add .
 git commit -m "Initial commit"
 git push -u origin master
 
-Existing Git repository
+###Existing Git repository
 
 cd existing_repo
 git remote add origin git@gitlab.com:thandonguocmo2020/geek.git
