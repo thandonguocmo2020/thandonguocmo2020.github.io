@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>EXP </title>
+</head>
+<body>
+
+    <code>
+
+
+    VUEJS
+    
+    > không dùng v-model khi update dữ liệu. dùng :value để thay thế. Lý do : vì chưa update dữ liệu phía server đã update phía client.
+
+    > Lỗi thiếu thuộc tính khi hiển thị dữ liệu trong vuejs sử dụng dữ liệu từ vuex.
+
+    ví dụ mặc định ban đầu một người dùng có nhiều post : data load từ database xuống database client == có thuộc tính [item.numComment,item2,item3...n]
+
+    ta tạo thêm một bài viết vào dữ liệu client => đẩy lên server... lúc này cần tạo ra thuộc tính add vào mảng data kia vì có thể numComment được tính toán trên server database.
+
+    client cũng cần làm việc tương tự tạo ra thuộc tính mới add vào item của client storage.
+
+    ví dụ mutations của vuex :
+
+    [POST_NEW](state, post) {
+        post.comments = [];
+        post.numCmt = 0;
+        state.posts.unshift(post);
+    },
+    </code>
+
+    
+</body>
+</html>
