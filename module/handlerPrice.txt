@@ -1,0 +1,62 @@
+Xử lý tiền tệ với lũy thừa số  ví dụ  4.4e-7 hoặc 4.4e+7 trong javascript. 
+
+Vấn đề : Khi nạp data vào database nó lưu big decimal sang dạng double => 4.4e-7 hoặc 4.4e+7.
+
+Giả định lấy ra một list object cần xử lý list đó để convert all các thuộc tính số sang một dạng tiền tệ tương ứng trả lại cho api sau request. 
+
+Hình s2 and s3 giả định object trả về từ database.
+
+Tiếp đến viết một module xử lý convertPrice
+
+Đầu tiên mỗi ojbect đều có field và value tương ứng lên phải tách field để kiểm tra xem dữ liệu lưu trữ là date hay object hay string hay number như vậy value là number or object.
+
+Để check mình dùng :
+
+typeof _obj._doc[key] == 'number'
+
+Vì đoạn lệnh trên xử lý hầu hết được kiểm tra số lên mình làm vậy cho gọn. 
+
+For field get value 
+
+  Object.keys(_obj._doc).map(key => {
+        _obj._doc[key] = typeof _obj._doc[key] == 'number' ?  handlerNumber(_obj._doc[key]) : _obj._doc[key];
+       });
+
+Ở trên hàm handlerNumber sẽ có nhiệm vụ con vert con số cụ thể nếu nó là số dạng lũy thừa. 
+
+Còn nếu nó là chuỗi hoặc object id ... thì return lại chính nó.
+
+Tiếp đến mình viết hàm handlerNumber như sau  đặt nên trên phía module.
+
+function handlerNumber(num){
+    Number.prototype.noExponents= function(){
+        var data= String(this).split(/[eE]/);
+
+        if(data.length== 1) return data[0]; 
+    
+        var  z= '', sign= this<0? '-':'',
+        str= data[0].replace('.', ''),
+        mag= Number(data[1])+ 1;
+    
+        if(mag<0){
+            z= sign + '0.';
+            while(mag++) z += '0';
+            return z + str.replace(/^\-/,'');
+        }
+        mag -= str.length;  
+        while(mag--) z += '0';
+        return str + z;
+    }
+
+    return num.noExponents();
+}
+
+
+hàm này trả về dữ liệu giống như ảnh s4 và mình log từng field + data show kết quả xem thử hình s5
+
+
+Nếu bạn muốn convert tiếp một lần nữa sang dạng price cụ thể có thể dùng một số hàm của numeraljs npm module.
+
+Đây là module mình viết export .txt lúc nào cần mình sẽ xem lại. Viết vô đây ai bị mắc thì có thể tìm kiếm trong group giống mìn. 
+
+
