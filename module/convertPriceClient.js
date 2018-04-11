@@ -43,7 +43,7 @@ module.exports = function convertPrice(price, symbol = "", sort = 1) {
         }
     } catch (error) {
         console.log(error);
-        console.log("BÁO LỖI ĐỂ CÓ THỂ DEBUG ====>");
+        console.log("CHỖ NÀY CÓ THỂ ALERT BÁO LỖI ĐỂ DEBUG ====>");
         return sort == 1 ? symbol + " " + "???" : "???" + " " + symbol;
     }
 }
